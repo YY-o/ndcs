@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#171027">
+<title>大朝女帝 · 后宫抉择测试</title>
+<style>
+:root{--bg:#171027;--panel:#211735;--gold:#d9b65b;--gold2:#f4df9b;--lav:#d9c8f2;--muted:#aa9abf;--line:rgba(217,182,91,.34);--ease:cubic-bezier(.2,.75,.25,1)}
+*{box-sizing:border-box}
+html{min-height:100%;background:var(--bg)}
+body{margin:0;min-height:100vh;min-height:100dvh;color:#f8f0ff;font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;background:radial-gradient(ellipse at 18% 8%,rgba(180,130,230,.18),transparent 32%),radial-gradient(ellipse at 85% 28%,rgba(212,175,55,.13),transparent 30%),linear-gradient(155deg,#1d1530,#100a1d 75%);overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:28px 28px;z-index:0}
+#particles{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+button{font:inherit}
+button:focus-visible{outline:2px solid var(--gold2);outline-offset:3px}
+.app{position:relative;z-index:1;width:min(100% - 28px,520px);margin:0 auto;padding:16px 0 calc(30px + env(safe-area-inset-bottom))}
+.topline{display:flex;align-items:center;justify-content:space-between;color:rgba(255,255,255,.38);font:12px Georgia,serif;letter-spacing:3px}
+.sound{border:1px solid var(--line);border-radius:99px;background:rgba(255,255,255,.045);color:var(--gold2);padding:8px 12px;font-size:12px;cursor:pointer}
+.header{text-align:center;padding:26px 8px 16px}
+.eyebrow{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:6px 14px;color:var(--gold2);font:11px Georgia,serif;letter-spacing:4px}
+h1{font-size:clamp(25px,7vw,34px);letter-spacing:3px;color:#fff4d0;text-shadow:0 0 22px rgba(217,182,91,.3);margin:15px 0 8px}
+.subtitle{font-size:13px;line-height:1.8;letter-spacing:1px;color:var(--lav)}
+.panel{border:1px solid var(--line);border-radius:22px;background:linear-gradient(160deg,rgba(255,255,255,.075),rgba(255,255,255,.025));box-shadow:0 18px 45px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.08);position:relative;overflow:hidden}
+.panel:before{content:"";position:absolute;inset:9px;border:1px solid rgba(217,182,91,.12);border-radius:15px;pointer-events:none}
+.page{display:none;animation:rise .45s var(--ease) both}
+.page.active{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.intro{padding:32px 24px;text-align:center}
+.seal{width:94px;height:94px;margin:0 auto 20px;border:1px solid rgba(244,223,155,.7);border-radius:26px;display:grid;place-items:center;color:var(--gold2);font-size:48px;transform:rotate(45deg);box-shadow:0 0 32px rgba(217,182,91,.15),inset 0 0 24px rgba(217,182,91,.08)}
+.seal span{transform:rotate(-45deg)}
+.intro h2{font-size:24px;letter-spacing:3px;color:#fff2c8;margin:26px 0 12px}
+.intro p{color:var(--lav);font-size:14px;line-height:2;margin:0 auto 24px;max-width:360px}
+.btn{border:0;border-radius:13px;padding:14px 18px;min-height:48px;cursor:pointer;transition:transform .2s,filter .2s,box-shadow .2s;letter-spacing:2px}
+.btn:active{transform:scale(.98)}
+.primary{color:#21152e;font-weight:700;background:linear-gradient(120deg,#d4ae50,#f5e3a5 50%,#c79b3c);box-shadow:0 8px 24px rgba(190,145,53,.22)}
+.secondary{color:#f6eaff;background:rgba(255,255,255,.055);border:1px solid var(--line)}
+.btn:hover{filter:brightness(1.08)}
+.full{width:100%}
+.progress-wrap{margin:6px 4px 16px}
+.progress-meta{display:flex;justify-content:space-between;color:#d6c7e9;font-size:12px;margin-bottom:8px}
+.track{height:6px;background:rgba(255,255,255,.09);border-radius:99px;overflow:hidden;border:1px solid rgba(217,182,91,.2)}
+.fill{height:100%;width:0;background:linear-gradient(90deg,#b88b36,#f5e3a5,#d2a74b);box-shadow:0 0 12px rgba(217,182,91,.5);transition:width .35s}
+.question-card{padding:24px 20px 20px}
+.q-label{color:var(--gold);font:11px Georgia,serif;letter-spacing:4px;margin-bottom:13px}
+.question{font-size:17px;line-height:1.85;color:#fff;margin-bottom:20px}
+.options{display:grid;gap:11px}
+.option{width:100%;text-align:left;color:#f2e9ff;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.13);border-radius:14px;padding:13px 13px;line-height:1.7;font-size:14px;cursor:pointer;position:relative;transition:background .2s,border-color .2s,transform .2s}
+.option:before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:5px;background:linear-gradient(var(--gold),#9b6ac6);opacity:0;transition:opacity .2s}
+.option:hover,.option.selected{background:rgba(217,182,91,.1);border-color:rgba(217,182,91,.65)}
+.option.selected:before{opacity:1}
+.letter{display:inline-grid;place-items:center;width:25px;height:25px;margin-right:8px;border-radius:8px;background:linear-gradient(135deg,#d9b65b,#a477c2);color:#241632;font-weight:800;font-size:12px;vertical-align:middle}
+.navrow{display:flex;gap:10px;margin-top:16px}
+.navrow .btn{flex:1}
+.dots{display:flex;justify-content:center;gap:7px;margin:16px 0 4px}
+.dot{width:6px;height:6px;border-radius:9px;background:rgba(255,255,255,.2);transition:all .25s}
+.dot.active{width:20px;background:var(--gold)}
+.result{padding:26px 22px;text-align:center}
+.crown{font-size:44px;filter:drop-shadow(0 0 12px rgba(217,182,91,.35));margin-bottom:6px}
+.result-kicker{font:11px Georgia,serif;color:var(--gold);letter-spacing:4px}
+.result h2{font-size:25px;letter-spacing:2px;color:#fff0c7;margin:12px 0 8px}
+.result-sub{font-size:13px;color:var(--lav);margin-bottom:18px}
+.result-text{text-align:left;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;color:#e9def7;font-size:14px;line-height:1.95}
+.scoreline{color:var(--gold2);font-size:13px;letter-spacing:1px;margin:14px 0}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
+.metric{background:rgba(255,255,255,.045);border:1px solid rgba(217,182,91,.18);border-radius:12px;padding:11px;text-align:left}
+.metric-head{display:flex;justify-content:space-between;font-size:12px;color:#e8dcf6;margin-bottom:8px}
+.metric-head b{color:var(--gold2)}
+.meter{height:5px;background:rgba(255,255,255,.1);border-radius:9px;overflow:hidden}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,#9871c5,#e3c36f);border-radius:9px}
+.analysis{font-size:12px;color:#c9b8df;line-height:1.8;text-align:left;margin:12px 0 0}
+.actions{display:grid;gap:10px;margin-top:19px}
+.tip{color:#ad9bbb;font-size:11px;letter-spacing:1px;margin-top:15px}
+.hidden{display:none!important}
+#posterCanvas{width:100%;height:auto;border-radius:12px;border:1px solid var(--line);display:block;background:#1b1230}
+.poster-wrap{margin-top:16px;text-align:left}
+.poster-wrap p{font-size:12px;color:var(--muted);margin:8px 0}
+.footer{text-align:center;color:rgba(255,255,255,.28);font-size:10px;letter-spacing:2px;margin-top:20px}
+@media(max-width:360px){.app{width:calc(100% - 20px)}.question-card{padding:20px 15px}.question{font-size:16px}.option{font-size:13px;padding:12px}.result{padding:23px 16px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<canvas id="particles" aria-hidden="true"></canvas>
+<div class="app">
+  <div class="topline"><span>TAMI · IMPERIAL ARCHIVE</span><button class="sound" id="soundBtn" type="button">♫ 开启宫廷配乐</button></div>
+  <header class="header">
+    <div class="eyebrow">THE EMPRESS TEST</div>
+    <h1>大朝女帝 · 后宫抉择测试</h1>
+    <div class="subtitle">九道抉择，窥见你心底的情感底色</div>
+  </header>
+
+  <section id="introPage" class="page active panel intro">
+    <div class="seal"><span>凤</span></div>
+    <div class="eyebrow">登基诏书</div>
+    <h2>万里江山，何处安放真心？</h2>
+    <p>自你登临帝位，朝堂、后宫与旧日情分便交织成局。九道抉择之后，你将看见自己的帝王本心。</p>
+    <button class="btn primary full" id="startBtn">开启登基之路</button>
+    <p style="font-size:11px;margin:14px 0 0;color:#9f8eaf">共 9 题 · 约 3 分钟 · 结果仅供娱乐</p>
+  </section>
+
+  <section id="quizPage" class="page">
+    <div class="progress-wrap">
+      <div class="progress-meta"><span id="progressIndex">第 1 题</span><span>共 9 题</span></div>
+      <div class="track"><div class="fill" id="progressFill"></div></div>
+    </div>
+    <div class="panel question-card">
+      <div class="q-label" id="qLabel">QUESTION 01</div>
+      <div class="question" id="questionText"></div>
+      <div class="options" id="options"></div>
+      <div class="navrow">
+        <button class="btn secondary" id="prevBtn">上一题</button>
+        <button class="btn primary" id="nextBtn" disabled>确认选择</button>
+      </div>
+    </div>
+    <div class="dots" id="dots"></div>
+  </section>
+
+  <section id="resultPage" class="page panel result">
+    <div class="crown" id="resultIcon">👑</div>
+    <div class="result-kicker">YOUR IMPERIAL PROFILE</div>
+    <h2 id="resultTitle"></h2>
+    <div class="result-sub" id="resultTag"></div>
+    <div class="result-text" id="resultText"></div>
+    <div class="scoreline" id="scoreLine"></div>
+    <div class="metrics" id="metrics"></div>
+    <div class="analysis" id="dominantLine"></div>
+    <div class="actions">
+      <button class="btn primary full" id="posterBtn">生成专属女帝海报</button>
+      <button class="btn secondary full" id="shareBtn">分享我的女帝人格</button>
+      <button class="btn secondary full" id="copyBtn">复制结果文字</button>
+      <button class="btn secondary full" id="restartBtn">重新测试</button>
+    </div>
+    <div class="poster-wrap hidden" id="posterWrap">
+      <canvas id="posterCanvas" width="900" height="1200"></canvas>
+      <p>长按图片或点击下方按钮保存海报。</p>
+      <button class="btn secondary full" id="downloadBtn">保存海报图片</button>
+    </div>
+    <div class="tip">大朝女帝 · 一念定江山，一心照宫阙</div>
+  </section>
+  <div class="footer">✦ 大朝皇室 · 内廷档案 ✦</div>
+</div>
+
+<script>
+"use strict";
+const QUESTIONS = [
+{q:"登基之前，你早已与一位竹马少男相知相许，他本就盼着与你相守一生。如今朝臣劝你广纳侍君，你的第一反应是？",a:[
+["觉得你已是女帝，拥有众多侍君本就是理所应当，竹马也该懂事接受这份规制",{devotion:0,power:4,balance:1,romance:3}],
+["没有太多心理负担，正好借此机会看看更多才貌出众的男子",{devotion:0,power:2,balance:0,romance:4}],
+["第一时间私下寻他安抚，许诺他永远是你心中首位，接纳其他人入宫只是权宜之计",{devotion:4,power:1,balance:2,romance:0}],
+["内心纠结痛苦，但清楚帝王身不由己，只能接受选秀择侍君，尽量多给他恩宠补偿",{devotion:3,power:1,balance:4,romance:0}]
+]},
+{q:"邻国主动提出和亲，将本国王子送入你的国家入赘为你的侧位赘君，联姻换取两国长久和平，稳固你的边境政权，你会？",a:[
+["听闻王子容貌俊秀，对此事十分期待，巴不得早日相见",{devotion:0,power:2,balance:0,romance:4}],
+["权衡利弊后同意迎娶，将这次联姻当作国事，以大局为重，把私人情爱放在朝堂之后",{devotion:1,power:2,balance:4,romance:0}],
+["欣然应允，邻国王子身份尊贵，纳入后宫能大涨你的威望，是非常划算的选择",{devotion:0,power:4,balance:2,romance:1}],
+["尽量婉拒，实在推脱不掉，也只是表面礼遇，绝不给他过多恩宠，不让他威胁竹马的地位",{devotion:4,power:0,balance:2,romance:0}]
+]},
+{q:"选秀开启，各地世家纷纷送来容貌、才情各有长处的男子供你挑选，你挑选侍君最优先看重什么？",a:[
+["外貌与风情，是否能讨你欢心",{devotion:0,power:1,balance:0,romance:4}],
+["家族势力，能否对你的皇权统治有所助益",{devotion:0,power:3,balance:4,romance:0}],
+["品性安稳，不会争宠生事，不会伤害你的竹马爱人",{devotion:4,power:0,balance:2,romance:0}],
+["出身体面，纳入后宫彰显帝王威仪",{devotion:0,power:4,balance:2,romance:1}]
+]},
+{q:"某日竹马撞见你和刚入宫不久的侍君闲谈说笑，他黯然神伤前来向你倾诉委屈，你会？",a:[
+["觉得他过于拘束乏味，对比之下反倒更偏爱新入宫之人",{devotion:0,power:1,balance:0,romance:4}],
+["略微不耐，告诉他既然选择伴帝王，就要懂得接受后宫规制，不要小家子气",{devotion:0,power:4,balance:1,romance:2}],
+["心生愧疚，好生宽慰，减少与其他侍君亲近，多抽时间陪伴他",{devotion:4,power:0,balance:1,romance:0}],
+["温和开导他，告诉他帝王自有帝王的责任，希望他多多体谅你的处境",{devotion:2,power:2,balance:4,romance:0}]
+]},
+{q:"朝堂大臣上奏，提议抬高某位新侍君的位份来拉拢其背后家族，此时你的竹马的位份迟迟没有加封，你会？",a:[
+["顺势顺着大臣意思，乐于看见更多貌美男子身居高位陪伴自己",{devotion:0,power:3,balance:1,romance:3}],
+["以国事为先，优先顺着朝臣意思提拔世家送来的男子，认为竹马不必争这些虚名",{devotion:0,power:2,balance:4,romance:0}],
+["力排众议，优先加封竹马，稳固他独一无二的位置",{devotion:4,power:0,balance:0,romance:0}],
+["两边平衡，一边安抚朝堂，一边慢慢给竹马逐步提升位份",{devotion:2,power:1,balance:4,romance:0}]
+]},
+{q:"夜深独处，静下心来，你内心深处怎么看待女帝设立后宫、择纳侍君这件事？",a:[
+["坐拥后宫，能够遇见不同的心上人，本就是一件乐事",{devotion:0,power:2,balance:0,romance:4}],
+["帝王坐拥后宫本就是本分，拥有众多侍君天经地义",{devotion:0,power:4,balance:2,romance:1}],
+["本心只想要一人相守，纳侍君纯粹是逼不得已的国事牺牲",{devotion:4,power:0,balance:1,romance:0}],
+["身为帝王有自己的无奈，情爱要为江山让步，可以容纳多名伴侣",{devotion:1,power:2,balance:4,romance:1}]
+]},
+{q:"有人暗中散播流言，说你偏爱竹马，会为他徇私干政，朝中已经出现反对声音，这时你会？",a:[
+["刻意稍微冷落竹马一段时间，平息朝堂非议，等风波过去再补偿他",{devotion:1,power:1,balance:4,romance:0}],
+["不予理会，流言终究是空话，不必为朝臣的看法刻意改变对待竹马的态度",{devotion:3,power:1,balance:1,romance:0}],
+["借机敲打传谣官员，明确表示不许妄议你的内廷，护住竹马不受非议",{devotion:4,power:2,balance:0,romance:0}],
+["认为感情容易成为政敌攻击你的弱点，有意识拉开距离，减少和他公开相处",{devotion:1,power:3,balance:4,romance:0}]
+]},
+{q:"竹马私下向你坦言，后宫众多侍君的存在长久折磨着他，他询问你是否有机会削减后宫人数，你会？",a:[
+["如实告知他皇权稳固之前无法做到，劝他学会忍耐，这是身为帝眷必须承担的代价",{devotion:1,power:3,balance:4,romance:0}],
+["许诺他日大局安定便逐步裁撤后宫，但当下只能维持现状稳住各方势力",{devotion:2,power:1,balance:4,romance:0}],
+["直言帝王后宫是立国旧制，不该因为一人好恶改动，希望他不要再提出这类请求",{devotion:0,power:4,balance:2,romance:1}],
+["心中泛起动摇，开始思索是否还有别的办法，甚至生出抛开一切与他远离朝堂的念头",{devotion:4,power:0,balance:0,romance:0}]
+]},
+{q:"你需要挑选一名侍君陪同出席重大国宴，在场各国使臣都会到场，人选可以是竹马或是势力庞大的世家侍君，你的选择是？",a:[
+["选择世家侍君出席，向外释放你重视世家、团结朝堂的信号，事后再安抚竹马",{devotion:0,power:2,balance:4,romance:0}],
+["选择竹马，你更希望身边站着的是自己心意之人，宴会外交价值次之",{devotion:4,power:0,balance:0,romance:0}],
+["轮流安排，这次任用世家侍君，下次重要场合再给竹马机会，维持两边平衡",{devotion:2,power:1,balance:4,romance:0}],
+["挑选容貌出众最能惊艳四座之人，优先展现大朝风采，不优先考虑旧情或是朝堂势力",{devotion:0,power:2,balance:0,romance:4}]
+]}
+];
+const PROFILES = [
+{key:"devotion",icon:"🌙",title:"情系旧人，知权之重",tag:"心有所属 · 以情守局",text:"你心底最珍视自年少相伴走来的竹马。纵然身居帝位，你仍愿为这份旧情留出位置。你并非不懂朝堂权衡，也知道偏爱可能成为政敌攻讦的把柄；只是你不愿让自己彻底变成只懂利弊的君主。你想守住江山，也想护住那个曾与你并肩走过年少岁月的人。"},
+{key:"balance",icon:"⚖️",title:"制衡帝王，情理兼顾",tag:"运筹帷幄 · 以衡治宫",text:"你习惯把后宫与朝堂放在同一盘棋局中审视。情爱并非全无分量，但必须与国事相互协调。你擅长安抚旧人、平衡世家、避免任何一方独大。你未必冷酷，却很少让一时情绪左右决定；对你而言，坐稳帝位、守住秩序，才是长久之道。"},
+{key:"power",icon:"👑",title:"帝权为先，乐享尊荣",tag:"乾纲独断 · 权柄在握",text:"在你看来，登临帝位便意味着承担权柄，也意味着拥有选择的自由。你不愿让旧日情分成为限制自己的枷锁，后宫既是身份与威仪的象征，也可以成为政治布局的一部分。你坦然接受帝王身份带来的特权，做决定时更倾向先考虑自己的权力与统治秩序。"},
+{key:"romance",icon:"🌸",title:"心无定所，贪恋风月",tag:"万千风月 · 随心而行",text:"最吸引你的，是权柄带来的广阔选择与不同相遇。你享受欣赏各色才情与风姿，不愿把自己困在单一关系里。对你而言，后宫不只是政治筹码，也是一处可以容纳新鲜感与个人欢愉的天地。你更愿意顺着心意体验人生，而非固守某一种情感秩序。"}
+];
+const LABELS={devotion:"专情指数",power:"帝权指数",balance:"权衡指数",romance:"风月指数"};
+const state={index:0,answers:Array(QUESTIONS.length).fill(null),scores:null,profile:null};
+const $=id=>document.getElementById(id);
+const pages=["introPage","quizPage","resultPage"];
+function showPage(id){pages.forEach(p=>$(p).classList.toggle("active",p===id));window.scrollTo({top:0,behavior:"smooth"});}
+function renderQuestion(){
+ const q=QUESTIONS[state.index];$("qLabel").textContent=`QUESTION ${String(state.index+1).padStart(2,"0")}`;
+ $("questionText").textContent=q.q;$("progressIndex").textContent=`第 ${state.index+1} 题`;
+ $("progressFill").style.width=`${(state.index+1)/QUESTIONS.length*100}%`;
+ $("options").innerHTML="";
+ q.a.forEach((item,i)=>{const b=document.createElement("button");b.type="button";b.className="option"+(state.answers[state.index]===i?" selected":"");b.innerHTML=`<span class="letter">${"ABCD"[i]}</span>`;const t=document.createTextNode(item[0]);b.appendChild(t);b.addEventListener("click",()=>{state.answers[state.index]=i;renderQuestion();playTone(620,.07);});$("options").appendChild(b);});
+ $("prevBtn").disabled=state.index===0;$("prevBtn").style.opacity=state.index===0?".45":"1";
+ $("nextBtn").disabled=state.answers[state.index]===null;
+ $("nextBtn").textContent=state.index===QUESTIONS.length-1?"揭晓我的女帝人格":"确认选择";
+ $("dots").innerHTML=QUESTIONS.map((_,i)=>`<span class="dot ${i===state.index?"active":""}"></span>`).join("");
+}
+function calculate(){
+ const keys=Object.keys(LABELS),raw={devotion:0,power:0,balance:0,romance:0};
+ state.answers.forEach((answer,qi)=>{const s=QUESTIONS[qi].a[answer][1];keys.forEach(k=>raw[k]+=s[k]);});
+ // 每个维度独立归一化到 0-100：以该维度九题可得最高分为基准
+ const max={devotion:36,power:36,balance:36,romance:36};
+ const normalized={};keys.forEach(k=>normalized[k]=Math.round(raw[k]/max[k]*100));
+ state.scores=normalized;
+ // 主导人格优先按归一化得分；并列时使用固定顺序保证结果稳定
+ const order=["devotion","balance","power","romance"];
+ let winner=order[0];order.forEach(k=>{if(normalized[k]>normalized[winner])winner=k;});
+ state.profile=PROFILES.find(p=>p.key===winner);
+}
+function showResult(){
+ calculate();const p=state.profile;$("resultIcon").textContent=p.icon;$("resultTitle").textContent=p.title;$("resultTag").textContent=p.tag;$("resultText").textContent=p.text;
+ const sum=state.answers.reduce((a,v)=>a+v+1,0);$("scoreLine").textContent=`九题已完成 · 选择倾向值 ${sum} / 36`;
+ $("metrics").innerHTML=Object.entries(LABELS).map(([k,label])=>`<div class="metric"><div class="metric-head"><span>${label}</span><b>${state.scores[k]}%</b></div><div class="meter"><i style="width:${state.scores[k]}%"></i></div></div>`).join("");
+ const sorted=Object.entries(state.scores).sort((a,b)=>b[1]-a[1]);$("dominantLine").textContent=`你的主导倾向是「${LABELS[sorted[0][0]]}」，其次是「${LABELS[sorted[1][0]]}」。四维数值呈现本次作答的相对倾向，并非心理诊断。`;
+ showPage("resultPage");playTone(760,.14);setTimeout(()=>playTone(960,.18),140);
+}
+$("startBtn").addEventListener("click",()=>{playTone(520,.09);state.index=0;showPage("quizPage");renderQuestion();});
+$("prevBtn").addEventListener("click",()=>{if(state.index>0){state.index--;renderQuestion();}});
+$("nextBtn").addEventListener("click",()=>{if(state.answers[state.index]===null)return;if(state.index<QUESTIONS.length-1){state.index++;renderQuestion();}else showResult();});
+$("restartBtn").addEventListener("click",()=>{state.index=0;state.answers.fill(null);state.scores=null;state.profile=null;$("posterWrap").classList.add("hidden");showPage("introPage");});
+function resultText(){const p=state.profile;return `【大朝女帝 · ${p.title}】\n${p.tag}\n${p.text}\n\n四维人格：${Object.entries(LABELS).map(([k,v])=>`${v} ${state.scores[k]}%`).join("｜")}\n\n大朝女帝 · 九道抉择，窥见帝王本心`;}
+$("copyBtn").addEventListener("click",async()=>{try{await navigator.clipboard.writeText(resultText());$("copyBtn").textContent="已复制结果";}catch(e){fallbackCopy(resultText());$("copyBtn").textContent="已尝试复制";}setTimeout(()=>$("copyBtn").textContent="复制结果文字",1800);});
+function fallbackCopy(text){const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();}
+$("shareBtn").addEventListener("click",async()=>{const data={title:"我的大朝女帝人格",text:resultText()};try{if(navigator.share)await navigator.share(data);else{await navigator.clipboard.writeText(resultText());$("shareBtn").textContent="结果已复制，可粘贴分享";setTimeout(()=>$("shareBtn").textContent="分享我的女帝人格",2000);}}catch(e){}});
+function drawPoster(){
+ const c=$("posterCanvas"),ctx=c.getContext("2d"),p=state.profile,s=state.scores;
+ const g=ctx.createLinearGradient(0,0,900,1200);g.addColorStop(0,"#302047");g.addColorStop(.55,"#1b1230");g.addColorStop(1,"#10091d");ctx.fillStyle=g;ctx.fillRect(0,0,900,1200);
+ const glow=ctx.createRadialGradient(450,270,20,450,270,460);glow.addColorStop(0,"rgba(217,182,91,.23)");glow.addColorStop(1,"rgba(217,182,91,0)");ctx.fillStyle=glow;ctx.fillRect(0,0,900,700);
+ ctx.strokeStyle="rgba(232,199,119,.75)";ctx.lineWidth=3;ctx.strokeRect(35,35,830,1130);ctx.strokeStyle="rgba(232,199,119,.3)";ctx.lineWidth=1;ctx.strokeRect(52,52,796,1096);
+ ctx.textAlign="center";ctx.fillStyle="#e6c879";ctx.font="26px serif";ctx.fillText("大 朝 皇 室  ·  帝 王 档 案",450,120);
+ ctx.font="112px serif";ctx.fillText(p.icon,450,300);
+ ctx.fillStyle="#fff0c8";ctx.font="bold 52px serif";ctx.fillText(p.title,450,405);
+ ctx.fillStyle="#d7bf8d";ctx.font="26px serif";ctx.fillText(p.tag,450,460);
+ ctx.strokeStyle="rgba(232,199,119,.45)";ctx.beginPath();ctx.moveTo(150,510);ctx.lineTo(750,510);ctx.stroke();
+ const keys=Object.keys(LABELS);keys.forEach((k,i)=>{const y=590+i*105;ctx.textAlign="left";ctx.fillStyle="#eadfcf";ctx.font="28px serif";ctx.fillText(LABELS[k],150,y);ctx.textAlign="right";ctx.fillStyle="#f2d78f";ctx.fillText(s[k]+"%",750,y);ctx.fillStyle="rgba(255,255,255,.12)";roundRect(ctx,150,y+20,600,12,6);ctx.fill();const bar=ctx.createLinearGradient(150,0,750,0);bar.addColorStop(0,"#9b72c4");bar.addColorStop(1,"#e5c36e");ctx.fillStyle=bar;roundRect(ctx,150,y+20,600*s[k]/100,12,6);ctx.fill();});
+ ctx.textAlign="center";ctx.fillStyle="#d9c9e8";ctx.font="23px serif";wrapText(ctx,p.text,450,1030,650,38,2);
+ ctx.fillStyle="#b99d61";ctx.font="20px Georgia,serif";ctx.fillText("TAMI  ·  THE EMPRESS TEST",450,1120);
+ $("posterWrap").classList.remove("hidden");$("posterWrap").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function roundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r);}
+function wrapText(ctx,text,x,y,maxWidth,lineHeight,maxLines){let line="",lines=[];for(const ch of text){const test=line+ch;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=ch;}else line=test;}if(line)lines.push(line);lines=lines.slice(0,maxLines);lines.forEach((l,i)=>ctx.fillText(l,x,y+i*lineHeight));}
+$("posterBtn").addEventListener("click",drawPoster);
+$("downloadBtn").addEventListener("click",()=>{const a=document.createElement("a");a.download="大朝女帝-我的人格档案.png";a.href=$("posterCanvas").toDataURL("image/png");a.click();});
+
+// Web Audio：可听见的古风五声音阶氛围配乐 + 轻柔交互音效
+// 采用浏览器实时合成，不需要外链音频；首次播放必须由用户点击触发。
+let audioCtx = null;
+let musicOn = false;
+let musicTimer = null;
+let musicStep = 0;
+let masterGain = null;
+let activeNodes = [];
+
+function ensureAudio() {
+  if (!audioCtx) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) {
+      $("soundBtn").textContent = "当前浏览器不支持音频";
+      return null;
+    }
+    audioCtx = new AudioContextClass();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.72;
+    masterGain.connect(audioCtx.destination);
+  }
+  return audioCtx;
+}
+
+async function unlockAudio() {
+  const ctx = ensureAudio();
+  if (!ctx) return false;
+  try {
+    if (ctx.state !== "running") await ctx.resume();
+    return ctx.state === "running";
+  } catch (err) {
+    console.warn("音频启动失败：", err);
+    return false;
+  }
+}
+
+function playNote(freq, when, duration, volume, type = "sine") {
+  const ctx = audioCtx;
+  if (!ctx || !masterGain) return;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const filter = ctx.createBiquadFilter();
+
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, when);
+  filter.type = "lowpass";
+  filter.frequency.setValueAtTime(type === "triangle" ? 1800 : 2600, when);
+  gain.gain.setValueAtTime(0.0001, when);
+  gain.gain.exponentialRampToValueAtTime(Math.max(0.0002, volume), when + 0.035);
+  gain.gain.setTargetAtTime(0.0001, when + duration * 0.45, Math.max(0.08, duration * 0.22));
+
+  osc.connect(filter);
+  filter.connect(gain);
+  gain.connect(masterGain);
+  osc.start(when);
+  osc.stop(when + duration + 0.5);
+  activeNodes.push(osc);
+  osc.onended = () => {
+    osc.disconnect();
+    filter.disconnect();
+    gain.disconnect();
+    activeNodes = activeNodes.filter(node => node !== osc);
+  };
+}
+
+function playMusicPhrase() {
+  if (!musicOn || !audioCtx || audioCtx.state !== "running") return;
+
+  // D 宫五声音阶：柔和、空灵的古风旋律
+  const scale = [293.66, 329.63, 392.00, 440.00, 587.33, 440.00, 392.00, 329.63];
+  const bass = [146.83, 196.00, 220.00, 196.00];
+  const now = audioCtx.currentTime + 0.04;
+  const beat = 0.62;
+
+  // 每四拍铺一层柔和低音，避免单纯低频嗡鸣
+  if (musicStep % 4 === 0) {
+    const base = bass[(musicStep / 4) % bass.length];
+    playNote(base, now, 2.15, 0.055, "sine");
+    playNote(base * 1.5, now + 0.025, 1.65, 0.018, "triangle");
+  }
+
+  // 主旋律：钟磬般的清亮音色，音量比背景铺底更明显
+  const note = scale[musicStep % scale.length];
+  playNote(note, now, 0.9, 0.105, "sine");
+
+  // 偶尔加入高八度点缀，形成轻盈的宫廷氛围
+  if (musicStep % 4 === 2) {
+    playNote(note * 2, now + 0.12, 0.58, 0.026, "triangle");
+  }
+
+  musicStep++;
+}
+
+function startMusic() {
+  if (!musicOn) return;
+  if (musicTimer) clearInterval(musicTimer);
+  playMusicPhrase();
+  musicTimer = setInterval(playMusicPhrase, 620);
+}
+
+function stopMusic() {
+  musicOn = false;
+  if (musicTimer) {
+    clearInterval(musicTimer);
+    musicTimer = null;
+  }
+  if (masterGain && audioCtx) {
+    masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+    masterGain.gain.setTargetAtTime(0.0001, audioCtx.currentTime, 0.12);
+    setTimeout(() => {
+      if (!musicOn && masterGain && audioCtx) {
+        masterGain.gain.setValueAtTime(0.72, audioCtx.currentTime);
+      }
+    }, 500);
+  }
+}
+
+function playTone(freq = 660, duration = 0.1) {
+  if (!musicOn || !audioCtx || audioCtx.state !== "running") return;
+  playNote(freq, audioCtx.currentTime + 0.01, duration, 0.075, "triangle");
+}
+
+$("soundBtn").addEventListener("click", async () => {
+  if (musicOn) {
+    stopMusic();
+    $("soundBtn").textContent = "♫ 开启宫廷配乐";
+    $("soundBtn").setAttribute("aria-pressed", "false");
+    return;
+  }
+
+  musicOn = true;
+  const ready = await unlockAudio();
+  if (!ready) {
+    musicOn = false;
+    $("soundBtn").textContent = "点击重试开启音乐";
+    return;
+  }
+
+  // 先恢复总音量，再开始旋律；这一步发生在真实点击手势之后
+  masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+  masterGain.gain.setValueAtTime(0.72, audioCtx.currentTime);
+  startMusic();
+  playTone(783.99, 0.18);
+  $("soundBtn").textContent = "♫ 关闭宫廷配乐";
+  $("soundBtn").setAttribute("aria-pressed", "true");
+});
+
+document.addEventListener("visibilitychange", async () => {
+  if (document.hidden && musicOn) {
+    if (musicTimer) clearInterval(musicTimer);
+    musicTimer = null;
+  } else if (!document.hidden && musicOn) {
+    const ready = await unlockAudio();
+    if (ready) startMusic();
+  }
+});
+
+// 轻量粒子：限制数量并响应减少动态效果设置
+const canvas=$("particles"),pctx=canvas.getContext("2d");let particles=[],raf=0;
+function resizeCanvas(){const dpr=Math.min(devicePixelRatio||1,2);canvas.width=innerWidth*dpr;canvas.height=innerHeight*dpr;canvas.style.width=innerWidth+"px";canvas.style.height=innerHeight+"px";pctx.setTransform(dpr,0,0,dpr,0,0);particles=Array.from({length:Math.min(34,Math.floor(innerWidth/12))},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*1.8+.5,v:Math.random()*.32+.08,a:Math.random()*.45+.12,phase:Math.random()*6}));}
+function animate(){pctx.clearRect(0,0,innerWidth,innerHeight);particles.forEach(p=>{p.y-=p.v;p.x+=Math.sin(p.y*.012+p.phase)*.18;if(p.y<-5){p.y=innerHeight+5;p.x=Math.random()*innerWidth;}pctx.beginPath();pctx.arc(p.x,p.y,p.r,0,Math.PI*2);pctx.fillStyle=`rgba(236,203,124,${p.a})`;pctx.fill();});raf=requestAnimationFrame(animate);}
+resizeCanvas();addEventListener("resize",resizeCanvas);
+if(!matchMedia("(prefers-reduced-motion: reduce)").matches)animate();
+</script>
+</body>
+</html>
